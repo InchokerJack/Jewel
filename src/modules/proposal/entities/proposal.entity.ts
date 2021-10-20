@@ -8,7 +8,7 @@ export class Proposal {
   @Column()
   description: string;
 
-  @Column()
+  @Column('simple-array')
   options: string[];
 
   @Column()

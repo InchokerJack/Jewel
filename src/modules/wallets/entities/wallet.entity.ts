@@ -15,6 +15,8 @@ export class Wallet {
   @Column()
   commitBalance: number;
 
-  @Column()
-  proposal: Proposal;
+  // @Column()
+  // answer: []Answer
 }
+
+// type Answer propsalid, content :1234

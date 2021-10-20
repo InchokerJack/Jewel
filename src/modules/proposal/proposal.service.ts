@@ -1,15 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProposalDto } from './dto/create-proposal.dto';
 import { UpdateProposalDto } from './dto/update-proposal.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Proposal } from './entities/proposal.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ProposalService {
+  constructor(
+    @InjectRepository(Proposal)
+    private proposalRepository: Repository<Proposal>,
+  ) {}
   create(createProposalDto: CreateProposalDto) {
-    return 'This action adds a new proposal';
+    return this.proposalRepository.save(createProposalDto);
   }
 
-  findAll() {
-    return `This action returns all proposal`;
+  async findAll(): Promise<Proposal[]> {
+    try {
+      const result = await this.proposalRepository.find({
+        where: { description: 'string' },
+      });
+      return result;
+    } catch (e) {
+      return e;
+    }
   }
 
   findOne(id: number) {
