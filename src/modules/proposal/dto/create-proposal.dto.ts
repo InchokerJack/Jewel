@@ -1,7 +1,20 @@
+import {
+  IsNotEmpty,
+  IsString,
+  IsArray,
+  IsNumber,
+} from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+
 export class CreateProposalDto {
-  id: number;
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
   description: string;
+  @IsArray()
+  @ApiProperty()
   options: string[];
-  correctAnswer: string;
-  publishDate: string;
+  @ApiProperty()
+  @IsNumber()
+  correctAnswer: number;
 }

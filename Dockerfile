@@ -5,6 +5,9 @@ COPY package*.json ./
 
 RUN npm install --only=development
 
+
+RUN docker run --name postgres-db -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
+
 COPY . .
 
 RUN npm run build

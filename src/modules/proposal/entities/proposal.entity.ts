@@ -12,8 +12,8 @@ export class Proposal {
   options: string[];
 
   @Column()
-  correctAnswer: string;
+  correctAnswer: number;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', nullable: true })
   publishDate: Date;
 }

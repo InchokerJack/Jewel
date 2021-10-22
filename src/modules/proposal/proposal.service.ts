@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateProposalDto } from './dto/create-proposal.dto';
 import { UpdateProposalDto } from './dto/update-proposal.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,30 +11,31 @@ export class ProposalService {
     @InjectRepository(Proposal)
     private proposalRepository: Repository<Proposal>,
   ) {}
-  create(createProposalDto: CreateProposalDto) {
-    return this.proposalRepository.save(createProposalDto);
-  }
-
-  async findAll(): Promise<Proposal[]> {
+  async create(createProposalDto: CreateProposalDto) {
     try {
-      const result = await this.proposalRepository.find({
-        where: { description: 'string' },
-      });
-      return result;
+      await this.proposalRepository.insert(createProposalDto);
     } catch (e) {
-      return e;
+      throw new HttpException('Insert fail', HttpStatus.BAD_REQUEST);
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} proposal`;
+  async findAll(): Promise<Proposal[]> {
+    return await this.proposalRepository.find();
+  }
+
+  async findOne(id: number) {
+    return await this.proposalRepository.find({ where: { id } });
   }
 
   update(id: number, updateProposalDto: UpdateProposalDto) {
     return `This action updates a #${id} proposal`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} proposal`;
+  async remove(id: number) {
+    try {
+      await this.proposalRepository.delete({ id });
+    } catch (e) {
+      throw new HttpException('Cannot delete', HttpStatus.BAD_REQUEST);
+    }
   }
 }

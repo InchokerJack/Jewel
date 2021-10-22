@@ -1,6 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { Proposal } from '../dto/create-wallet.dto';
-
+interface Answer {
+  proposalId: number;
+  answer: number;
+}
 @Entity()
 export class Wallet {
   @PrimaryGeneratedColumn()
@@ -15,8 +17,7 @@ export class Wallet {
   @Column()
   commitBalance: number;
 
-  // @Column()
-  // answer: []Answer
+  @Column('jsonb', { nullable: true })
+  answer: Answer[];
 }
 
-// type Answer propsalid, content :1234
