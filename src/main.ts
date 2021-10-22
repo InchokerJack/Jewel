@@ -10,9 +10,9 @@ async function bootstrap() {
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('', app, document);
   await app.listen(3000);
   console.log('app is running at port 3000');
-  console.log('document is at url/api');
+  console.log('document is ready');
 }
 bootstrap();
